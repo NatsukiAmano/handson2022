@@ -10,10 +10,23 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       title: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
+
       },
       done: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        default: false
+      },
+      categoryId:{
+        type: Sequelize.INTEGER,
+        references:{
+          model: {
+            tableName: 'Categories',
+            key: 'id'
+          }
+        }
       },
       createdAt: {
         allowNull: false,

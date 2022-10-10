@@ -12,12 +12,13 @@ module.exports = (sequelize, DataTypes) => {
       // 必要があればここにテーブルの関連付けを書く
       // メソッド自体は削除しない
     }
-  }
+  };
   Category.init({
     name: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Category',
+    timestamps: false
   });
   return Category;
 };

@@ -10,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      // テーブルの関連付け
     static associate(models) {
       Task.belongsTo(models.Category,{
-        foreignKey: 'categoryId',// デフォルト値なので未指定でも可
-        targetKey: 'id'          // 〃
+        foreignKey: 'categoryId', // デフォルト値なので未指定でも可
+        targetKey: 'id'           // 〃
       })
     }
     /**
@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
     /**
      * ステータスを変更する (CR"U"D)
      */
-     static async done(id, flag=true){
+    static async done(id, flag=true){
       try{
         await this.update({done: flag}, {
           where:{
@@ -69,7 +69,7 @@ module.exports = (sequelize, DataTypes) => {
     /**
      * タスクを物理削除 (CRU"D")
      */
-     static async remove(id){
+    static async remove(id){
       try{
         await this.destroy({
           where:{

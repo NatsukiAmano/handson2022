@@ -1,7 +1,3 @@
-/**
- * ToDoサーバ
- */
-
 //---------------------------------------------------------
 // modules
 //---------------------------------------------------------
@@ -30,42 +26,19 @@ app.use(express.static(DOCUMENT_ROOT))
 // API準備
 //-----------------
 /**
- * カテゴリー一覧を返却
+ * 問題を検索
  */
-app.get('/api/category', async (req, res) =>{
-  const category = await models.Category.findAll()
-  res.json(category)
+app.get('/vue/question', async (req, res) =>{
+  const question = await models.Question.findAll()
+  res.json(question)
 })
 /**
- * タスク一覧を返却
+ * 答えを検索
  */
- app.get('/api/task', async (req, res) =>{
-    res.json( await models.Task.getAll() )
+ app.get('/vue/ans', async (req, res) =>{
+    res.json( await models.Ans.getAns() )
 })
-/**
- * タスクを新規追加
- */
-app.post('/api/task/new', async (req, res) =>{
-    const result = await models.Task.add({
-        title: req.body.title,
-        category: req.body.category
-    })
-    res.json( {status: result !== false })
-})
-/**
- * タスクを完了
- */
-app.post('/api/task/done', async (req, res) =>{
-    const result = await models.Task.done(req.body.id)
-    res.json( {status: result !== false })
-})
-/**
- * タスクを物理削除
- */
-app.post('/api/task/remove', async (req, res) =>{
-    const result = await models.Task.remove(req.body.id)
-    res.json( {status: result !== false })
-})
+
 //-----------------
 // サーバー起動
 //-----------------

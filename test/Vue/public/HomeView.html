@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.5.55/css/materialdesignicons.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/vuetify@2.3.10/dist/vuetify.min.css" rel="stylesheet">
@@ -18,7 +19,8 @@
             <v-list-item>
               <v-list-item-content>
                 <v-list-item-title>問題</v-list-item-title>
-                <v-list-item-subtitle>{{ currentQuestion.question }}</v-list-item-subtitle>
+                <!-- <v-list-item-subtitle>{{ currentQuestion.question }}</v-list-item-subtitle> -->
+                <v-list-item-subtitle>{{ question }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
           </v-card>
@@ -47,35 +49,46 @@
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vuetify@2.3.10/dist/vuetify.js"></script>
   <script>
-  let app = new Vue({
-    el: '#app',
-    vuetify: new Vuetify(),
-    data(){
-      return{
-        questionIndex: 0,
-        questions:[
-          {question:'猫と鼠はどっちが大きい？',
-           answers: ['猫','鼠','その他'],
-           answer: 1
-          },
-          {question:'AとBはどちらが先？',
-           answers: ['A','B','その他'],
-           answer: 0
-          },
-          {question:'兎と亀はどちらが速い？',
-           answers: ['兎','亀','その他'],
-           answer: 1
-          },
-        ],
-        answers: [],
-      }
-    },
-    computed: {
-      currentQuestion(){
-        return this.questions[this.questionIndex];
-      }
+    import axios from 'axios';
+    // let app = new Vue({
+    //   el: '#app',
+    export default {
+      vuetify: new Vuetify(),
+      data(){
+        return{
+          questionIndex: 0,
+          // questions:[
+          //   {question:'猫と鼠はどっちが大きい？',
+          //    answers: ['猫','鼠','その他'],
+          //    answer: 1
+          //   },
+          //   {question:'AとBはどちらが先？',
+          //    answers: ['A','B','その他'],
+          //    answer: 0
+          //   },
+          //   {question:'兎と亀はどちらが速い？',
+          //    answers: ['兎','亀','その他'],
+          //    answer: 1
+          //   },
+          // ],
+          question: [],
+          answers: [],
+          answer: [],
+        }
+      },
+      mounted(){
+        axios
+          .get('url')
+          .then(response => (this.info = response.data)) 
+          .catch(e => this.error = e)         
+      },
+      // computed: {
+      //   currentQuestion(){
+      //     return this.questions[this.questionIndex];
+      //   }
+      // }
+    // })
     }
-  })
   </script>
 </body>
 </html>

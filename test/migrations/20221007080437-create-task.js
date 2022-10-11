@@ -12,7 +12,6 @@ module.exports = {
       title: {
         type: Sequelize.STRING,
         allowNull: false
-
       },
       done: {
         type: Sequelize.BOOLEAN,

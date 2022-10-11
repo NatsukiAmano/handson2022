@@ -16,6 +16,9 @@ module.exports = (sequelize, DataTypes) => {
     }
     /**
      * タスク一覧を返却 (C"R"UD)
+     * @static
+     * @returns {array|false}
+     * @memberof Task
      */
     static async getAll(){
       try {
@@ -35,12 +38,16 @@ module.exports = (sequelize, DataTypes) => {
     }
     /**
      * タスクを追加 ("C"RUD)
+     * @static
+     * @param {object} value - {title:'task name', category:1}
+     * @returns {object|false}
+     * @memberof Task
      */
     static async add(value){
       try{
         const task = await this.create({
           title: value.title,
-          categorId: value.category,
+          categoryId: value.category,
         })
         return(task)
       }
@@ -51,6 +58,11 @@ module.exports = (sequelize, DataTypes) => {
     }
     /**
      * ステータスを変更する (CR"U"D)
+     * @static
+     * @param {number} id
+     * @param {boolean} [flag=true]
+     * @returns {boolean}
+     * @memberof Task
      */
     static async done(id, flag=true){
       try{
@@ -68,6 +80,10 @@ module.exports = (sequelize, DataTypes) => {
     }
     /**
      * タスクを物理削除 (CRU"D")
+     * @static
+     * @param {number} id
+     * @returns {boolean}
+     * @memberof Task
      */
     static async remove(id){
       try{

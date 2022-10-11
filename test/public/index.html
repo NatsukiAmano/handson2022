@@ -10,8 +10,8 @@
 </head>
 <body>
   <h1>ToDo</h1>
-	<form>
-		<input type="text" name="todo" placeholder="ToDo">
+	<form id="newTask">
+		<input type="text" name="todo" placeholder="Todo">
 		<select id="category"></select>
 		<button>追加</button>
 	</form>
@@ -31,14 +31,14 @@
 			})
 		})
 		/**
-		 ** 各種イベントを設定
+		 * 各種イベントを設定
 		 */
 		function setEventTasksList(){
 			// チェックボックスをクリック
 			document.querySelectorAll('.done').forEach((el)=>{
 				el.addEventListener('click', (e)=>{
 					e.preventDefault()
-					const id = e.target.getAttribute('data^id')
+					const id = e.target.getAttribute('data-id')
 					doneTask(id)
 				})
 			})
@@ -54,8 +54,8 @@
 			})
 		}
 		/**
-		 ** 各種イベントを設定
-		 *@param{object} value
+		 * タスクを新規追加
+		 * @param {object} value
 		 */
 		async function addTask(value){
 			const result = await postAPI('task/new', value)
@@ -82,7 +82,6 @@
 		}
 		/**
 		 * タスクを物理削除
-		 *
 		 * @param {number} id
 		 */
 		async function removeTask(id){
@@ -99,10 +98,10 @@
 		 */
 		async function renderTask(){
 			const list = document.querySelector('#tasks');
-			list.innerHTML=''
+			list.innerHTML = ''
 
 			const task = await getAPI('task')
-			task.forEach(task =>{
+			task.forEach(task => {
 				const checkbox = task.done? '✔':`<input type="checkbox" class="done" data-id="${task.id}">`
 				const removelink = `<a href="#" class="remove" data-id="${task.id}">✖</a>`
 				const li = document.createElement('li')

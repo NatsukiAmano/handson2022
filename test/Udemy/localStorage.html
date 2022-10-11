@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<div id="app">
+		<h2>Cats</h2>
+		<!-- <h2>Books</h2> -->
+		<div v-for="(cat, n) in cats">
+		<!-- <div v-for="(book, n) in books"> -->
+			<p>
+			<span class="cat">{{ cat }}</span>
+			<!-- <span class="cat">{{ book }}</span> -->
+			<button @click="removeCat(n)">Remove</button>
+			<!-- <button @click="removeBook(n)">Remove</button> -->
+			</p>
+		</div>
+		
+		<p>
+			<input v-model="newCat">
+			<button @click="addCat">Add Cat</button>
+			<!-- <input v-model="newBook">
+			<button @click="addBook">Add Book</button> -->
+		</p>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+	<script>
+		// const STORAGE_KEY = 'books'
+		let app = new Vue({
+			el: '#app',
+			data(){
+				return {
+					cats: [],
+					newCat: null
+					// books: [],
+					// newBook: null
+				}
+			},
+			mounted() {
+				if (localStorage.getItem('cats')) {
+				// if (localStorage.getItem(STORAGE_KEY)) {
+					try {
+						this.cats = JSON.parse(localStorage.getItem('cats'));
+						// this.books = JSON.parse(localStorage.getItem(STORAGE_KEY));
+					} catch(e) {
+						localStorage.removeItem('cats');
+						// localStorage.removeItem(STORAGE_KEY);
+					}
+				}
+  		},
+			methods: {
+				addCat() {
+				// addBook() {
+					// 実際に何かしたことを入力する
+					if (!this.newCat) {
+					// if (!this.newBook) {
+						return;
+					}
+
+					this.cats.push(this.newCat);
+					// this.bookss.push(this.newBook);
+					this.newCat = '';
+					// this.newBook = '';
+					this.saveCats();
+					// this.saveBooks();
+				},
+				removeCat(x) {
+				// removeBook(x) {
+					this.cats.splice(x, 1);
+					// this.books.splice(x, 1);
+					this.saveCats();
+					// this.saveBooks();
+				},
+				saveCats() {
+				// saveBooks() {
+					const parsed = JSON.stringify(this.cats);
+					// const parsed = JSON.stringify(this.books);
+					localStorage.setItem('cats', parsed);
+					// localStorage.setItem(STORAGE_KEY, parsed);
+				}
+			}
+		})
+	</script>
+</body>
+</html>

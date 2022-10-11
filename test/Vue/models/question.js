@@ -10,6 +10,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
+    /**
+     * 問題の検索
+     */
   }
   Question.init({
     content: DataTypes.STRING

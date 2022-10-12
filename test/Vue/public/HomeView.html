@@ -57,23 +57,24 @@
       data(){
         return{
           questionIndex: 0,
-          // questions:[
-          //   {question:'猫と鼠はどっちが大きい？',
-          //    answers: ['猫','鼠','その他'],
-          //    answer: 1
-          //   },
-          //   {question:'AとBはどちらが先？',
-          //    answers: ['A','B','その他'],
-          //    answer: 0
-          //   },
-          //   {question:'兎と亀はどちらが速い？',
-          //    answers: ['兎','亀','その他'],
-          //    answer: 1
-          //   },
-          // ],
-          question: [],
-          answers: [],
-          answer: [],
+          questions:[
+            {question:'猫と鼠はどっちが大きい？',
+             answers: ['猫','鼠','その他'],
+             answer: 1
+            },
+            {question:'AとBはどちらが先？',
+             answers: ['A','B','その他'],
+             answer: 0
+            },
+            {question:'兎と亀はどちらが速い？',
+             answers: ['兎','亀','その他'],
+             answer: 1
+            },
+          ]
+
+          // question: [],
+          // answers: [],
+          // answer: []
         }
       },
       mounted(){
@@ -81,7 +82,8 @@
           .get('url')
           .then(response => (this.info = response.data)) 
           .catch(e => this.error = e)         
-      },
+      }
+      
       // computed: {
       //   currentQuestion(){
       //     return this.questions[this.questionIndex];

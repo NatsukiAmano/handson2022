@@ -25,12 +25,13 @@ app.use(express.static(DOCUMENT_ROOT))
 //-----------------
 // API準備
 //-----------------
-app.get("/public/HomeView", async (req, res) => {
-  // const question = models.Question.findAll()
-  res.json(await models.Question.getAll());
-  console.log(req);
-  console.log(res);
-});
+app.get("/", async (req, res) => {
+  // const question = await models.Question.findAll()
+  const ques = await models.Ans.findByPk(2)
+  res.json(ques)
+  // console.log(res)
+  console.log(ques)
+})
 
 /**
  * 問題を検索

@@ -25,28 +25,21 @@ app.use(express.static(DOCUMENT_ROOT))
 //-----------------
 // API準備
 //-----------------
+
+// Ansテーブルのデータをlocalhost:3000で表示
 app.get("/", async (req, res) => {
-  // const question = await models.Question.findAll()
-  const ques = await models.Ans.findByPk(2)
-  res.json(ques)
-  // console.log(res)
-  console.log(ques)
+  const ans = await models.Ans.findAll()
+  // const ans = await models.Ans.findByPk(2)
+  res.json(ans)
+  console.log(ans)
 })
 
-/**
- * 問題を検索
- */
-// app.get('/vue/question', async (req, res) =>{
-//   const question = await models.Question.findAll()
-//   res.json(question)
-// })
-
-/**
- * 答えを検索
- */
-//  app.get('/vue/ans', async (req, res) =>{
-//     res.json( await models.Ans.getAns() )
-// })
+// QuestionとAnsを紐づけ&～3000/1で表示
+app.get("/1", async(req, res) => {
+  const ques = await models.Ans.getAns()
+  res.json(ques)
+  console.log(ques)
+})
 
 //-----------------
 // サーバー起動

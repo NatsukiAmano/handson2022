@@ -1,6 +1,15 @@
+const models = require('./models')
+const path = require('path')
+
+const PORT = 3000
+const DOCUMENT_ROOT = path.join(__dirname, 'public')
+
 const express = require("express");
 const app  = express();
-const port = 3000;
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(express.static(DOCUMENT_ROOT))
 
 // ルーティングの設定
 app.get("/", (req, res) =>{

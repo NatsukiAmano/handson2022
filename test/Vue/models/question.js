@@ -10,10 +10,11 @@ module.exports = (sequelize, DataTypes) => {
      static async getAll(){
       try {
         const ques = await this.findAll()
-        return(ques)   
+        return(ques)
       }
-      catch (error) {
+      catch (e) {
         console.error(e)
+        return(false)
       }
     }
   }

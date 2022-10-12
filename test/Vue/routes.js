@@ -18,16 +18,18 @@ const DOCUMENT_ROOT = path.join(__dirname, 'public')
 //-----------------
 const express = require('express')
 const app  = express()
-// app.use(express.json())
-// app.use(express.urlencoded({ extended: true }))
-// app.use(express.static(DOCUMENT_ROOT))
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(express.static(DOCUMENT_ROOT))
 
 //-----------------
 // API準備
 //-----------------
-app.get("/", (req, res) => {
-  res.send('Helo');
-  console.log('OK')
+app.get("/public/HomeView", async (req, res) => {
+  // const question = models.Question.findAll()
+  res.json(await models.Question.getAll());
+  console.log(req);
+  console.log(res);
 });
 
 /**

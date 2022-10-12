@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   class Ans extends Model {
     
     static associate(models) {
+      // 1:n関係のテーブル関連付け
       Ans.belongsTo(models.Question,{
         foreignKey: 'questionId',
         targetKey: 'id'
@@ -13,15 +14,6 @@ module.exports = (sequelize, DataTypes) => {
      * 問題に紐づく回答を検索
      */
     static async getAns(){
-      // const answers = await this.findByPk()
-      // answers.forEach(ans => {
-      //   const id=answers.id
-      //   const questionId=answers.questionId
-      //   const anscontent=answers.ansTxt
-      //   const flag=answers.CorrectFg
-      //   console.log('${id}:${questionId} ${anscontent} ${flag}')
-      // });
-
       try{
         const answers = await this.findAll({ 
           include: 'Question'

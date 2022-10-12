@@ -2,8 +2,6 @@
 const express = require("express");
 const app  = express();
 const port = 3000;
-// POSTのクエリーを良い感じに処理する
-app.use(express.urlencoded({extended: true}));
 
 // ルーティングの設定
 // app.get("/", (req, res) =>{
@@ -20,13 +18,6 @@ app.use(express.urlencoded({extended: true}));
 
 //   console.log("/ へアクセスがありました");
 // });
-
-// 5，POSTの場合
-app.post("/", (req, res) =>{
-  const name = req.body.name;
-  res.send(`君の名は ${name}`);
-  console.log("/ へアクセスがありました");
-});
 
 // 3，先頭が(:)の文字列は変数のような扱い。どの文字列(URL)でも入る
 // app.get("/image/:file", (req, res) =>{

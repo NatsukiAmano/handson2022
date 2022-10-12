@@ -14,8 +14,8 @@
 		<!-- <div v-for="(book, n) in books"> -->
 			<p>
 				<span class="cat">{{ cat }}</span>
-				<!-- <span class="cat">{{ book }}</span> -->
 				<button @click="removeCat(n)">Remove</button>
+				<!-- <span class="cat">{{ book }}</span> -->
 				<!-- <button @click="removeBook(n)">Remove</button> -->
 			</p>
 		</div>
@@ -62,24 +62,24 @@
 					}
 
 					this.cats.push(this.newCat);
-					// this.bookss.push(this.newBook);
 					this.newCat = '';
-					// this.newBook = '';
 					this.saveCats();
+					// this.bookss.push(this.newBook);
+					// this.newBook = '';
 					// this.saveBooks();
 				},
 				removeCat(x) {
 				// removeBook(x) {
 					this.cats.splice(x, 1);
-					// this.books.splice(x, 1);
 					this.saveCats();
+					// this.books.splice(x, 1);
 					// this.saveBooks();
 				},
 				saveCats() {
 				// saveBooks() {
 					const parsed = JSON.stringify(this.cats);
-					// const parsed = JSON.stringify(this.books);
 					localStorage.setItem('cats', parsed);
+					// const parsed = JSON.stringify(this.books);
 					// localStorage.setItem(STORAGE_KEY, parsed);
 				}
 			}

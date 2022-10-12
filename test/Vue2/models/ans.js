@@ -1,20 +1,18 @@
 'use strict';
-const { Model} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Ans extends Model {
     
     static associate(models) {
       Ans.belongsTo(models.Question,{
         foreignKey: 'questionId',
-        sourceKey: 'id'
+        targetKey: 'id'
       })
     }
     /**
      * 問題に紐づく回答を検索
      */
     static async getAns(){
-      // include: 'Question',
-
       // const answers = await this.findByPk()
       // answers.forEach(ans => {
       //   const id=answers.id
@@ -26,10 +24,12 @@ module.exports = (sequelize, DataTypes) => {
 
       try{
         const answers = await this.findAll({ 
-          where: {id: 'questionId'}
+          include: 'Question',
+          attributes: ['id']
+          // where: {id: 'questionId'}
         })
-        console.log(answers)
         return(answers)
+        console.log(answers)
       }
       catch(e){
         console.error(e)
@@ -38,7 +38,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Ans.init({
-    CorrectFg: DataTypes.STRING
+    ansTxt: DataTypes.STRING,
+    correctFg: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Ans',

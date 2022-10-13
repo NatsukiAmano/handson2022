@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 参照HP https://blog.capilano-fw.com/?p=2499 -->
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.5.55/css/materialdesignicons.min.css" rel="stylesheet">
@@ -21,33 +20,31 @@
             <v-list-item>
               <v-list-item-content>
                 <v-list-item-title>問題</v-list-item-title>
-                <v-list-item-subtitle>{{ currentQuestion.question }}</v-list-item-subtitle>
-                <!-- <v-list-item-subtitle>{{ question }}</v-list-item-subtitle> -->
+                <v-list-item-subtitle>{{ currentQuestion.Question.content }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
           </v-card>
 
           <v-card class="mx-auto" max-width="900"> 
             <v-list color="grey darken-1">
-              <!-- ★課題：以下クリックしても次の問題が表示されず。keyが問題？-->
-              <v-list-item v-for="(answer,index) in currentQuestion.answers" :key="answer.index" @click="addAnswer(index)">
+              <v-list-item v-for="(ques, index) in questions" @click="addAnswer(index)">
                 <v-list-item-avatar class="ma-2" tile size="40" color="grey lighten-3">
                   {{ index+1 }}
                 </v-list-item-avatar>
                 <v-list-item-content>
-                  <v-list-item-subtitle>
-                    {{answer}}
-                  </v-list-item-subtitle>
+                  <!-- ★課題：全問題の回答がループ表示される。回答だけ配列に入れておく必要あり-->
+                  <v-list-item-subtitle>{{ques.ansTxt}}</v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
           </v-card>
 
           <!-- 表示テスト用 -->
-          {{responses}}
+          {{questions}}
+          {{answers}}
           <ul>
-            <li v-for="res in responses">
-              {{ res.Question.id }},{{ res.Question.content }}:{{ res.ansTxt }}
+            <li v-for="ques in questions">
+              {{ ques.Question.id }},{{ ques.Question.content }}:{{ ques.ansTxt }}
             </li>
           </ul>
         </v-container>
@@ -65,49 +62,52 @@
     // export default {
       vuetify: new Vuetify(),
       data: {
-        responses: [],
-
-        answers: [],  // 全解答を保持する変数(配列)
+        answers: [],
         questionIndex: 0,
-        questions:[
-          {question:'猫と鼠はどっちが大きい？',
-            answers: ['猫','鼠','その他'],
-            answer: 1
-          },
-          {question:'AとBはどちらが先？',
-            answers: ['A','B','その他'],
-            answer: 0
-          },
-          {question:'兎と亀はどちらが速い？',
-            answers: ['兎','亀','その他'],
-            answer: 1
-          }
-        ]
-        // answer: []
+        questions: [],
+        //仮データ
+        // questions:[
+        //   {question:'猫と鼠はどっちが大きい？',
+        //     answers: ['猫','鼠','その他'],
+        //     answer: 1
+        //   },
+        //   {question:'AとBはどちらが先？',
+        //     answers: ['A','B','その他'],
+        //     answer: 0
+        //   },
+        //   {question:'兎と亀はどちらが速い？',
+        //     answers: ['兎','亀','その他'],
+        //     answer: 1
+        //   }
+        // ]
       },
-      methods:{
-        addAnswer(index){
-          this.answers.push(index);
-          if (this.questions.length = this.answers.length) {
-            // クイズが完了したとき
-            var correctCount = 0;
-            for (var i in this.answers) {
-              var answer = this.answers[i];
-              if (answer = this.questions[i].answer) {
-                correctCount++;
-              }
-            }
-          } else {
-            this.questionIndex++;
-          }
-        }
-      },
+      // methods:{
+      //   addAnswer(index){
+      //     this.answers.push(index);
+      //     if (this.questions.length = this.answers.length) {
+      //       // クイズが完了したとき
+      //       var correctCount = 0;
+      //       for (var i in this.answers) {
+      //         var answer = this.answers[i];
+      //         if (answer = this.questions[i].answer) {
+      //           correctCount++;
+      //         }
+      //       }
+      //     } else {
+      //       this.questionIndex++;
+      //     }
+      //   }
+      // },
       async mounted(){
+        // defaultsでアクセスするURLを設定
         axios.defaults.baseURL = 'http://localhost:3000';
         try {
+          // 全取得データを格納
           const response = await axios.get('/1');
-          this.responses = response.data;
-          console.log(responses);
+          // 取得データのdataの部分を上記questions[]に格納
+          this.questions = response.data;
+          this.answers = questions.ansTxt;
+          // console.log(responses);
         } catch (error) {
           console.log(error)
         }

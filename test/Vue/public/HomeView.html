@@ -9,6 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 </head>
 
+<!-- ★課題：読込時コードが一瞬表示される-->
 <body>
   <div id="app">
     <v-app>
@@ -28,7 +29,8 @@
 
           <v-card class="mx-auto" max-width="900"> 
             <v-list color="grey darken-1">
-              <v-list-item v-for="(answer,index) in currentQuestion.answers" :key="(answer,index)" @click="addAnswer(index)">
+              <!-- ★課題：以下クリックしても次の問題が表示されず。keyが問題？-->
+              <v-list-item v-for="(answer,index) in currentQuestion.answers" :key="answer.index" @click="addAnswer(index)">
                 <v-list-item-avatar class="ma-2" tile size="40" color="grey lighten-3">
                   {{ index+1 }}
                 </v-list-item-avatar>
@@ -56,7 +58,7 @@
       vuetify: new Vuetify(),
       data(){
         return{
-          answers: [],
+          answers: [],  // 全解答を保持する変数(配列)
           questionIndex: 0,
           questions:[
             {question:'猫と鼠はどっちが大きい？',
@@ -87,7 +89,6 @@
               if (answer = this.questions[i].answer) {
                 correctCount++;
               }
-              alert(correctCount +'問正解です！');  
             }
           } else {
             this.questionIndex++;

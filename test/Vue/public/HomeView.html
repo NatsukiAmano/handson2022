@@ -27,21 +27,22 @@
 
           <v-card class="mx-auto" max-width="900"> 
             <v-list color="grey darken-1">
-              <v-list-item v-for="(ques, index) in questions" @click="addAnswer(index)">
+              <!-- ★課題：同じ回答がループ表示される。回答だけ配列に入れておく?-->
+              <v-list-item v-for="(ansTxt, index) in questions" @click="addAnswer(index)">
                 <v-list-item-avatar class="ma-2" tile size="40" color="grey lighten-3">
                   {{ index+1 }}
                 </v-list-item-avatar>
                 <v-list-item-content>
-                  <!-- ★課題：全問題の回答がループ表示される。回答だけ配列に入れておく必要あり-->
-                  <v-list-item-subtitle>{{ques.ansTxt}}</v-list-item-subtitle>
+                  <v-list-item-subtitle>{{currentQuestion.ansTxt}}</v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
           </v-card>
 
           <!-- 表示テスト用 -->
-          {{questions}}
-          {{answers}}
+          <!-- {{questions}} -->
+          {{currentQuestion}}
+          <!-- {{currentQuestion.ansTxt}} -->
           <ul>
             <li v-for="ques in questions">
               {{ ques.Question.id }},{{ ques.Question.content }}:{{ ques.ansTxt }}
@@ -65,39 +66,25 @@
         answers: [],
         questionIndex: 0,
         questions: [],
-        //仮データ
-        // questions:[
-        //   {question:'猫と鼠はどっちが大きい？',
-        //     answers: ['猫','鼠','その他'],
-        //     answer: 1
-        //   },
-        //   {question:'AとBはどちらが先？',
-        //     answers: ['A','B','その他'],
-        //     answer: 0
-        //   },
-        //   {question:'兎と亀はどちらが速い？',
-        //     answers: ['兎','亀','その他'],
-        //     answer: 1
-        //   }
-        // ]
       },
-      // methods:{
-      //   addAnswer(index){
-      //     this.answers.push(index);
-      //     if (this.questions.length = this.answers.length) {
-      //       // クイズが完了したとき
-      //       var correctCount = 0;
-      //       for (var i in this.answers) {
-      //         var answer = this.answers[i];
-      //         if (answer = this.questions[i].answer) {
-      //           correctCount++;
-      //         }
-      //       }
-      //     } else {
-      //       this.questionIndex++;
-      //     }
-      //   }
-      // },
+      methods:{
+        addAnswer(index){
+          this.answers.push(index);
+          if (this.questions.length == this.answers.length) {
+            // クイズが完了したとき
+            var correctCount = 0;
+            for (var i in this.answers) {
+              var answer = this.answers[i];
+              if (answer == this.questions[i].answer) {
+                correctCount++;
+              }
+            }
+            alert(correctCount +'問正解です！');
+          } else {
+            this.questionIndex++;
+          }
+        }
+      },
       async mounted(){
         // defaultsでアクセスするURLを設定
         axios.defaults.baseURL = 'http://localhost:3000';
@@ -106,7 +93,11 @@
           const response = await axios.get('/1');
           // 取得データのdataの部分を上記questions[]に格納
           this.questions = response.data;
-          this.answers = questions.ansTxt;
+          // questions[]内のansTxtをanswers[]に格納
+          // for (let i in questions) {
+          //   this.answers = questions[i].ansTxt;
+          //   i++
+          // }
           // console.log(responses);
         } catch (error) {
           console.log(error)

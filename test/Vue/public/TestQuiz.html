@@ -28,7 +28,6 @@
 
           <v-card class="mx-auto" max-width="900"> 
             <v-list color="grey darken-1">
-              <!-- ★課題：以下クリックしても次の問題が表示されず。keyが問題？-->
               <v-list-item v-for="(answer,index) in currentQuestion.answers" :key="answer.index" @click="addAnswer(index)">
                 <v-list-item-avatar class="ma-2" tile size="40" color="grey lighten-3">
                   {{ index+1 }}

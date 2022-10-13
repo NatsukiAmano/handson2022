@@ -28,13 +28,13 @@
 				axios.defaults.baseURL = 'https://jsonplaceholder.typicode.com';
 				axios.get('/users')
 							//1,コンソールのObject>dataに10ユーザーあればOK
-							.then(response => console.log(response))
-							.catch(error => console.log(error))
-							//2,dataプロパティのusersに取得データを保存
-							// .then(response => this.users = response.data)
-          		// .catch(error => console.log(error))
+							// .then(response => console.log(response))
+							// .catch(error => console.log(error))
+							// 2,dataプロパティのusersに取得データを保存
+							.then(response => this.users = response.data)
+          		.catch(error => console.log(error))
 
-				//3,パラメータから特定情報を取得
+				// 3,パラメータから特定情報を取得
 				// axios.get('https://jsonplaceholder.typicode.com/users',
 				// 			{params: {name: 'Glenna Reichert'} })
         //   		.then(response => this.users = response.data)

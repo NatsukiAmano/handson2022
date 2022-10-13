@@ -43,6 +43,13 @@
             </v-list>
           </v-card>
 
+          <!-- 表示テスト用 -->
+          {{responses}}
+          <ul>
+            <li v-for="res in responses">
+              {{ res.Question.id }},{{ res.Question.content }}:{{ res.ansTxt }}
+            </li>
+          </ul>
         </v-container>
       </v-main>
     </v-app>
@@ -57,27 +64,26 @@
       el: '#app',
     // export default {
       vuetify: new Vuetify(),
-      data(){
-        return{
-          answers: [],  // 全解答を保持する変数(配列)
-          questionIndex: 0,
-          questions:[
-            {question:'猫と鼠はどっちが大きい？',
-             answers: ['猫','鼠','その他'],
-             answer: 1
-            },
-            {question:'AとBはどちらが先？',
-             answers: ['A','B','その他'],
-             answer: 0
-            },
-            {question:'兎と亀はどちらが速い？',
-             answers: ['兎','亀','その他'],
-             answer: 1
-            }
-          ]
-          // question: [],
-          // answer: []
-        }
+      data: {
+        responses: [],
+
+        answers: [],  // 全解答を保持する変数(配列)
+        questionIndex: 0,
+        questions:[
+          {question:'猫と鼠はどっちが大きい？',
+            answers: ['猫','鼠','その他'],
+            answer: 1
+          },
+          {question:'AとBはどちらが先？',
+            answers: ['A','B','その他'],
+            answer: 0
+          },
+          {question:'兎と亀はどちらが速い？',
+            answers: ['兎','亀','その他'],
+            answer: 1
+          }
+        ]
+        // answer: []
       },
       methods:{
         addAnswer(index){
@@ -100,7 +106,8 @@
         axios.defaults.baseURL = 'http://localhost:3000';
         try {
           const response = await axios.get('/1');
-          console.log(response)
+          this.responses = response.data;
+          console.log(responses);
         } catch (error) {
           console.log(error)
         }

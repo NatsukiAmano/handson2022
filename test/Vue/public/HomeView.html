@@ -50,6 +50,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vuetify@2.3.10/dist/vuetify.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script>
     // import axios from 'axios';
     let app = new Vue({
@@ -95,12 +96,15 @@
           }
         }
       },
-      // mounted(){
-      //   axios
-      //     .get('url')
-      //     .then(response => (this.info = response.data)) 
-      //     .catch(e => this.error = e)         
-      // },
+      async mounted(){
+        axios.defaults.baseURL = 'http://localhost:3000';
+        try {
+          const response = await axios.get('/1');
+          console.log(response)
+        } catch (error) {
+          console.log(error)
+        }
+      },
       computed: {
         currentQuestion: function() {
           return this.questions[this.questionIndex];

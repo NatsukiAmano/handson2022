@@ -35,15 +35,15 @@ app.use((req, res, next) => {
 
 // Ansテーブルのデータをlocalhost:3000で表示
 app.get("/", async (req, res) => {
-  const ans = await models.Ans.findAll()
+  const ans = await models.Question.findAll()
   // const ans = await models.Ans.findByPk(2)
   res.json(ans)
   // console.log(ans)
 })
 
-// QuestionとAnsを紐づけ&～3000/1で表示
+// QuestionとAnsを紐づけ&～3000/1で表示(getAnsはans.jsで定義)
 app.get("/1", async(req, res) => {
-  const ques = await models.Ans.getAns()
+  const ques = await models.Question.getAns()
   res.json(ques)
   // console.log(ques)
 })

@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     /**
      * 問題に紐づく回答を検索
      */
-     static async getAns(){
+     static async getQue(){
       try{
         const answers = await this.findAll({ 
           include: 'Ans'

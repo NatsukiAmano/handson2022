@@ -11,20 +11,19 @@ module.exports = (sequelize, DataTypes) => {
       // })
     }
     /**
-     * 問題に紐づく回答を検索
+     * 問題と
      */
-    // static async getAns(){
-    //   try{
-    //     const answers = await this.findAll({ 
-    //       include: 'Question',
-    //       attributes: ['ansTxt', 'correctFg','questionId','Question.content']
-    //     })
-    //     return(answers)
-    //   } catch(e){
-    //     console.error(e)
-    //     return(false)
-    //   }
-    // }
+    static async getAns(){
+      try{
+        const answers = await this.findAll({ 
+          attributes: ['ansTxt', 'correctFg','questionId']
+        })
+        return(answers)
+      } catch(e){
+        console.error(e)
+        return(false)
+      }
+    }
   }
   Ans.init({
     ansTxt: DataTypes.STRING,

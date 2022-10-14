@@ -15,38 +15,43 @@
       <v-main>
         <v-container fluid>
           <h1>{{ questionIndex+1 }}問目</h1>
-
+ 
           <v-card class="mx-auto" max-width="900" flat>
             <v-list-item>
               <v-list-item-content>
                 <v-list-item-title>問題</v-list-item-title>
-                <v-list-item-subtitle>{{ currentQuestion.Question.content }}</v-list-item-subtitle>
+                <v-list-item-subtitle>{{ currentQuestion.content }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
           </v-card>
+          <!-- ★課題：同じ回答がループ表示される。回答だけ配列に入れておく  -->
+          <!-- @click="addAnswer(index)" -->
 
           <v-card class="mx-auto" max-width="900"> 
             <v-list color="grey darken-1">
-              <!-- ★課題：同じ回答がループ表示される。回答だけ配列に入れておく?-->
-              <v-list-item v-for="(ansTxt, index) in questions" @click="addAnswer(index)">
+              <v-list-item v-for="(Ans, index) in currentQuestion.Ans">
                 <v-list-item-avatar class="ma-2" tile size="40" color="grey lighten-3">
                   {{ index+1 }}
                 </v-list-item-avatar>
                 <v-list-item-content>
-                  <v-list-item-subtitle>{{currentQuestion.ansTxt}}</v-list-item-subtitle>
+                  <v-list-item-subtitle>{{Ans.ansTxt}}</v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
           </v-card>
 
           <!-- 表示テスト用 -->
-          <!-- {{questions}} -->
-          {{currentQuestion}}
+          <!-- {{ans}} -->
+          {{questions}}
+          <!-- {{currentQuestion}} -->
           <!-- {{currentQuestion.ansTxt}} -->
           <ul>
-            <li v-for="ques in questions">
-              {{ ques.Question.id }},{{ ques.Question.content }}:{{ ques.ansTxt }}
-            </li>
+            <!-- <li v-for="ques in questions">
+              {{ques}}
+            </li> -->
+            <!-- <li v-for="a in ans">
+              {{a}}
+            </li> -->
           </ul>
         </v-container>
       </v-main>
@@ -63,42 +68,62 @@
     // export default {
       vuetify: new Vuetify(),
       data: {
-        answers: [],
         questionIndex: 0,
         questions: [],
+        ans: [],
+        anstext:[],
+        answers: []
       },
       methods:{
-        addAnswer(index){
-          this.answers.push(index);
-          if (this.questions.length == this.answers.length) {
-            // クイズが完了したとき
-            var correctCount = 0;
-            for (var i in this.answers) {
-              var answer = this.answers[i];
-              if (answer == this.questions[i].answer) {
-                correctCount++;
-              }
-            }
-            alert(correctCount +'問正解です！');
-          } else {
-            this.questionIndex++;
-          }
-        }
+        // addAnswer(index){
+        //   this.answers.push(index);
+        //   if (this.questions.length == this.answers.length) {
+        //     // クイズが完了したとき
+        //     var correctCount = 0;
+        //     for (var i in this.answers) {
+        //       var answer = this.answers[i];
+        //       if (answer == this.questions[i].answer) {
+        //         correctCount++;
+        //       }
+        //     }
+        //     alert(correctCount +'問正解です！');
+        //   } else {
+        //     this.questionIndex++;
+        //   }
+        // }
       },
       async mounted(){
         // defaultsでアクセスするURLを設定
         axios.defaults.baseURL = 'http://localhost:3000';
         try {
-          // 全取得データを格納
+          // 全データを取得
           const response = await axios.get('/1');
-          // 取得データのdataの部分を上記questions[]に格納
-          this.questions = response.data;
-          // questions[]内のansTxtをanswers[]に格納
-          // for (let i in questions) {
-          //   this.answers = questions[i].ansTxt;
-          //   i++
-          // }
-          // console.log(responses);
+          const data = response.data;
+          // dataのみquestions[]に、Ansテーブルのデータをansに格納
+          data.forEach(value => {
+            this.questions.push(value);
+            this.ans.push(value.Ans);
+            // const a = value.Ans;
+            // console.log(a);
+          })
+          data[0].Ans.forEach(value => {
+            console.log(value.ansTxt);
+          })
+
+          // this.ans.forEach(value => {
+          //   console.log( value.ansTxt );
+          // });
+          // questions[]からansTxtをanstext[]に格納
+          
+          // Ansテーブルからデータを取得
+          // const ansresponse = await axios.get('/');
+          // const ansdata = ansresponse.data;
+          // ansdata.forEach(value => {
+          //   // this.ans.push(value.ansTxt, value.questionId);
+          //   this.ans.push(value);
+          // })
+          // console.log( ans );
+
         } catch (error) {
           console.log(error)
         }

@@ -28,7 +28,7 @@
 
           <v-card class="mx-auto" max-width="900"> 
             <v-list color="grey darken-1">
-              <v-list-item v-for="(Ans, index) in currentQuestion.Ans">
+              <v-list-item v-for="(Ans, index) in currentQuestion.Ans" @click="addAnswer(index)">
                 <v-list-item-avatar class="ma-2" tile size="40" color="grey lighten-3">
                   {{ index+1 }}
                 </v-list-item-avatar>
@@ -52,6 +52,7 @@
               {{a}}
             </li> -->
           </ul>
+          <!-- 表示テスト用 -->
         </v-container>
       </v-main>
     </v-app>
@@ -74,22 +75,22 @@
         answers: []
       },
       methods:{
-        // addAnswer(index){
-        //   this.answers.push(index);
-        //   if (this.questions.length == this.answers.length) {
-        //     // クイズが完了したとき
-        //     var correctCount = 0;
-        //     for (var i in this.answers) {
-        //       var answer = this.answers[i];
-        //       if (answer == this.questions[i].answer) {
-        //         correctCount++;
-        //       }
-        //     }
-        //     alert(correctCount +'問正解です！');
-        //   } else {
-        //     this.questionIndex++;
-        //   }
-        // }
+        addAnswer(index){
+          this.answers.push(index);
+          if (this.questions.length == this.answers.length) {
+            // クイズが完了したとき
+            var correctCount = 0;
+            for (var i in this.answers) {
+              var answer = this.answers[i];
+              if (answer == this.questions[i].answer) {
+                correctCount++;
+              }
+            }
+            alert(correctCount +'問正解です！');
+          } else {
+            this.questionIndex++;
+          }
+        }
       },
       async mounted(){
         // defaultsでアクセスするURLを設定
